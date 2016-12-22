@@ -17,7 +17,11 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
-
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
     <Grid>
         <Grid Height="32" VerticalAlignment="top" Background="#512da8" MouseDown="barMouseDown">
             <Label HorizontalAlignment="Center" VerticalAlignment="center" Margin="10,0,0,0"  Foreground="#ddffffff">Extractor</Label>
@@ -58,13 +62,23 @@
                     </Button>
                 </StackPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
-            <materialDesign:ColorZone Mode="PrimaryMid" Height="56" materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="14 6 14 6"
-                              CornerRadius="0">
-                <StackPanel Orientation="Horizontal">
-                    //Toolbar Here!!
+            <Grid>
+                <materialDesign:ColorZone Mode="PrimaryMid" Height="56" materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="14 6 14 6"
+                                  CornerRadius="0">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{DynamicResource MaterialDesignToolForegroundButton}" HorizontalAlignment="Left">
+                                <Image Source="icons/menu.png"></Image>
+                            </Button>
+                            <Label x:Name="filename" Content="{Binding fileName}" Margin="8, 0, 0, 0" VerticalAlignment="Center" Foreground="White"></Label>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:ColorZone>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <Grid Width="250" HorizontalAlignment="Left" Margin="0, 56, 0, 0"><Border BorderThickness="0, 0, 1, 0" BorderBrush="Gray"/></Grid>
+                    <Grid Background="Black" HorizontalAlignment="Stretch"></Grid>
                 </StackPanel>
-            </materialDesign:ColorZone>
-
+            </Grid>
         </materialDesign:DrawerHost>
     </Grid>
 </Window>

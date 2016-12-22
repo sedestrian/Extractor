@@ -22,12 +22,15 @@ namespace Extractor
     {
 
         public String ImageSource { get; set; }
+        public String fileName { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             ImageSource = @"/Extractor;component/icons/cropsquare.png";
             maxi.DataContext = this;
+            filename.DataContext = this;
+            fileName = "Downloads/AllMyMods.rar";
         }
 
         private void barMouseDown(object sender, MouseButtonEventArgs e)
