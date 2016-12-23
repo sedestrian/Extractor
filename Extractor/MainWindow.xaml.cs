@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SharpCompress.Readers.Rar;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,6 +64,17 @@ namespace Extractor
         private void Minimize(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void OpenRar(object sender, RoutedEventArgs e)
+        {
+            using (var reader = RarReader.Open(File.OpenRead("polymerredo.rar")))
+            {
+                while (reader.MoveToNextEntry())
+                {
+                    Console.Write(reader.Entry.Key);
+                }
+            }
         }
     }
 }
