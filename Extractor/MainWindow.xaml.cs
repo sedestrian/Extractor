@@ -23,6 +23,9 @@ namespace Extractor
     public partial class MainWindow : Window
     {
 
+        List<DirItem> items = new List<DirItem>();
+        List<DirItem> currentItems = new List<DirItem>();
+
         public String ImageSource { get; set; }
         public String fileName { get; set; }
 
@@ -33,6 +36,7 @@ namespace Extractor
             maxi.DataContext = this;
             filename.DataContext = this;
             fileName = "Downloads/AllMyMods.rar";
+            lbTodoList.ItemsSource = currentItems;
         }
 
         private void barMouseDown(object sender, MouseButtonEventArgs e)
@@ -72,9 +76,47 @@ namespace Extractor
             {
                 while (reader.MoveToNextEntry())
                 {
-                    Console.Write(reader.Entry.Key);
-                }
+                    items.Add(new DirItem() { Title = reader.Entry.Key });
+                }                
+                setupFolders();
             }
         }
+
+        private void getChildren(object sender, RoutedEventArgs e)
+        {
+            currentItems.Clear();
+            String folder = ((Button)sender).Content.ToString();
+            foreach(DirItem i in items)
+            {
+
+                List<String> split = i.Title.Split('\\').ToList();
+                int di = split.IndexOf(folder);
+                Console.Write("Title " + i.Title + "\n");
+                Console.Write("di " + di + "\n");
+                Console.Write("Count " + split.Count + "\n");
+                if(split.Count == di + 2 && di >= 0)
+                {
+                    currentItems.Add(new DirItem() { Title = System.IO.Path.GetFileName(i.Title) });
+                }
+            }
+            var itemsView = CollectionViewSource.GetDefaultView(lbTodoList.ItemsSource);
+            itemsView.Refresh();
+        }
+
+        private void setupFolders()
+        {
+            String temppath = items[0].Title;
+            String rootDirectory = temppath.Split('\\')[0];
+            currentItems.Add(new DirItem() { Title = rootDirectory });
+            var itemsView = CollectionViewSource.GetDefaultView(lbTodoList.ItemsSource);
+            itemsView.Refresh();
+        }
+
+        public class DirItem
+        {
+            public string Title { get; set; }
+        }
+
+        
     }
 }

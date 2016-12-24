@@ -77,6 +77,21 @@
                 <DockPanel HorizontalAlignment="Stretch">
                     <Grid DockPanel.Dock="Left" Width="250" HorizontalAlignment="Left" Margin="0, 56, 0, 0"><Border BorderThickness="0, 0, 1, 0" BorderBrush="Gray"/></Grid>
                     <Grid Margin="0, 56, 0, 0" HorizontalAlignment="Stretch">
+                        <ListBox Name="lbTodoList" HorizontalContentAlignment="Stretch">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <!--<Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="100" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Title}" />
+                                        <ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" />
+                                    </Grid>-->
+                                    <Button Content="{Binding Title}" Click="getChildren"></Button>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                         <Button HorizontalAlignment="Right" materialDesign:ShadowAssist.ShadowDepth="Depth2" VerticalAlignment="Bottom" Margin="0, 0, 16, 16" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Click="OpenRar">
                             <Image Source="icons/zipbox.png" Width="24" Height="24"></Image>
                         </Button>
