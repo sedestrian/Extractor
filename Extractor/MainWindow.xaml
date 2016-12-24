@@ -48,18 +48,7 @@
         <materialDesign:DrawerHost BorderThickness="0" Margin="0,32,0,0" BorderBrush="{DynamicResource MaterialDesignDivider}">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <StackPanel Margin="16">
-                    <TextBlock Margin="4" HorizontalAlignment="Center">LEFT FIELD</TextBlock>
-                    <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                        CommandParameter="{x:Static Dock.Left}"
-                        Margin="4" HorizontalAlignment="Center"
-                        Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE THIS
-                    </Button>
-                    <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                        Margin="4" HorizontalAlignment="Center"
-                        Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE ALL
-                    </Button>
+                    <!-- Drawer content -->
                 </StackPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
             <Grid>
@@ -67,34 +56,54 @@
                                   CornerRadius="0">
                     <Grid>
                         <StackPanel Orientation="Horizontal">
-                            <Button Style="{DynamicResource MaterialDesignToolForegroundButton}" HorizontalAlignment="Left">
-                                <Image Source="icons/menu.png"></Image>
-                            </Button>
+                            <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" Width="24" Height="24" HorizontalAlignment="Left">
+                            </ToggleButton>
                             <Label x:Name="filename" Content="{Binding fileName}" Margin="8, 0, 0, 0" VerticalAlignment="Center" Foreground="White"></Label>
                         </StackPanel>
                     </Grid>
                 </materialDesign:ColorZone>
                 <DockPanel HorizontalAlignment="Stretch">
-                    <Grid DockPanel.Dock="Left" Width="250" HorizontalAlignment="Left" Margin="0, 56, 0, 0"><Border BorderThickness="0, 0, 1, 0" BorderBrush="Gray"/></Grid>
-                    <Grid Margin="0, 56, 0, 0" HorizontalAlignment="Stretch">
-                        <ListBox Name="lbTodoList" HorizontalContentAlignment="Stretch">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <!--<Grid Margin="0,2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="100" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding Title}" />
-                                        <ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" />
-                                    </Grid>-->
-                                    <Button Content="{Binding Title}" Click="getChildren"></Button>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        <Button HorizontalAlignment="Right" materialDesign:ShadowAssist.ShadowDepth="Depth2" VerticalAlignment="Bottom" Margin="0, 0, 16, 16" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Click="OpenRar">
-                            <Image Source="icons/zipbox.png" Width="24" Height="24"></Image>
-                        </Button>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250" />
+                            <ColumnDefinition Width="3" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TreeView Margin="0, 56, 0, 0">
+
+                            <TreeViewItem Header="North America">
+                                <TreeViewItem Header="USA"></TreeViewItem>
+                                <TreeViewItem Header="Canada"></TreeViewItem>
+                                <TreeViewItem Header="Mexico"></TreeViewItem>
+                            </TreeViewItem>
+                            <TreeViewItem Header="South America">
+                                <TreeViewItem Header="Argentina"></TreeViewItem>
+                                <TreeViewItem Header="Brazil"></TreeViewItem>
+                                <TreeViewItem Header="Uruguay"></TreeViewItem>
+                            </TreeViewItem>
+
+                        </TreeView>
+                        <GridSplitter Margin="0, 56, 0, 0" Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
+                        <Grid Grid.Column="2" Margin="0, 56, 0, 0">
+                            <ListBox Name="lbTodoList" HorizontalContentAlignment="Stretch">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <!--<Grid Margin="0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="100" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Title}" />
+                                            <ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" />
+                                        </Grid>-->
+                                        <Button Content="{Binding Title}" Tag="{Binding isFolder}" Click="getChildren"></Button>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Button HorizontalAlignment="Right" materialDesign:ShadowAssist.ShadowDepth="Depth2" VerticalAlignment="Bottom" Margin="0, 0, 16, 16" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Click="OpenRar">
+                                <Image Source="icons/zipbox.png" Width="24" Height="24"></Image>
+                            </Button>
+                        </Grid>
                     </Grid>
                 </DockPanel>
             </Grid>

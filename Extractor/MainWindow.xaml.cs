@@ -23,6 +23,8 @@ namespace Extractor
     public partial class MainWindow : Window
     {
 
+        private String currentFolder;
+
         List<DirItem> items = new List<DirItem>();
         List<DirItem> currentItems = new List<DirItem>();
 
@@ -72,11 +74,16 @@ namespace Extractor
 
         private void OpenRar(object sender, RoutedEventArgs e)
         {
+            currentItems.Clear();
+            items.Clear();
             using (var reader = RarReader.Open(File.OpenRead("polymerredo.rar")))
             {
                 while (reader.MoveToNextEntry())
                 {
-                    items.Add(new DirItem() { Title = reader.Entry.Key });
+                    var foldr = reader.Entry.IsDirectory;
+                    Console.Write(foldr+"\n");
+                    Console.Write(reader.Entry.Key);
+                    items.Add(new DirItem() { Title = reader.Entry.Key, isFolder = foldr });
                 }                
                 setupFolders();
             }
@@ -84,37 +91,39 @@ namespace Extractor
 
         private void getChildren(object sender, RoutedEventArgs e)
         {
-            currentItems.Clear();
-            String folder = ((Button)sender).Content.ToString();
-            foreach(DirItem i in items)
+            if (Boolean.Parse(((Button)sender).Tag.ToString()))
             {
-
-                List<String> split = i.Title.Split('\\').ToList();
-                int di = split.IndexOf(folder);
-                Console.Write("Title " + i.Title + "\n");
-                Console.Write("di " + di + "\n");
-                Console.Write("Count " + split.Count + "\n");
-                if(split.Count == di + 2 && di >= 0)
+                currentItems.Clear();
+                String folder = ((Button)sender).Content.ToString();
+                currentFolder = folder;
+                foreach (DirItem i in items)
                 {
-                    currentItems.Add(new DirItem() { Title = System.IO.Path.GetFileName(i.Title) });
+
+                    List<String> split = i.Title.Split('\\').ToList();
+                    int di = split.IndexOf(folder);
+                    if (split.Count == di + 2 && di >= 0)
+                    {
+                        currentItems.Add(new DirItem() { Title = System.IO.Path.GetFileName(i.Title), isFolder = i.isFolder });
+                    }
                 }
+                var itemsView = CollectionViewSource.GetDefaultView(lbTodoList.ItemsSource);
+                itemsView.Refresh();
             }
-            var itemsView = CollectionViewSource.GetDefaultView(lbTodoList.ItemsSource);
-            itemsView.Refresh();
         }
 
         private void setupFolders()
         {
             String temppath = items[0].Title;
             String rootDirectory = temppath.Split('\\')[0];
-            currentItems.Add(new DirItem() { Title = rootDirectory });
+            currentItems.Add(new DirItem() { Title = rootDirectory, isFolder = true });
             var itemsView = CollectionViewSource.GetDefaultView(lbTodoList.ItemsSource);
             itemsView.Refresh();
         }
 
         public class DirItem
         {
-            public string Title { get; set; }
+            public String Title { get; set; }
+            public Boolean isFolder { get; set; }
         }
 
         

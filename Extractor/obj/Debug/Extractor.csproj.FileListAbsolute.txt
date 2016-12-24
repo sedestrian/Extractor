@@ -39,3 +39,4 @@ C:\Users\alessandro\Documents\Visual Studio 2015\Projects\Extractor\Extractor\ob
 C:\Users\alessandro\Documents\Visual Studio 2015\Projects\Extractor\Extractor\obj\Debug\Extractor.csproj.GenerateResource.Cache
 d:\documenti\visual studio 2015\Projects\Extractor\Extractor\obj\Debug\Extractor.csprojResolveAssemblyReference.cache
 d:\documenti\visual studio 2015\Projects\Extractor\Extractor\bin\Debug\SharpCompress.dll
+C:\Users\alessandro\Documents\Visual Studio 2015\Projects\Extractor\Extractor\bin\Debug\SharpCompress.dll
